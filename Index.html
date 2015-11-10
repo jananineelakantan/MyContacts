@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8"/>
+    <title>My Contacts</title>
+        <script type="text/javascript">
+                function validateName()
+                {
+                var Name = document.getElementById("name").value;
+                if(Name.length == 0)
+                {
+                        printError("Please enter name","lbl_name","red");
+                        return false;
+                }
+                if(!Name.match(/[A-Za-z]*\s?$/))
+                {
+                        printError("Please enter valid name","lbl_name","red");
+                        return false;
+                }
+                printError("Valid name","lbl_name","green");
+                }
+
+                function validatePhone()
+                {
+                var phoneNo = document.getElementById("phoneNumber").value;
+                if(phoneNo.length == 0)
+                {
+                        printError("Please enter phone number","lbl_ph","red");
+                        return false;
+                }
+                if(!phoneNo.match(/^\+?[0-9]*$/))
+                {
+                        printError("Please enter valid phone number","lbl_ph","red");
+                        return false;
+                }
+                printError("Valid phone number","lbl_ph","green");
+                }
+
+                function printError(err_msg,element_id,color)
+                {
+                        document.getElementById(element_id).innerHTML = err_msg;
+                        document.getElementById(element_id).style.color = color;
+                }
+
+                function validateForm()
+                {
+                        if(!validateName() && !validatePhone())
+                                return false;
+                        else
+                                return true;
+                }
+                
+                function addContact()
+                {
+
+                var Name = document.getElementById("name");
+                var PhNo = document.getElementById("phoneNumber");
+                var table = document.getElementById("myContactsData");
+
+                var rowCount = table.rows.length;
+                var row = table.insertRow(rowCount);
+
+                row.insertCell(0).innerHTML= Name.value;
+                row.insertCell(1).innerHTML= PhNo.value;
+
+                }
+
+                function deleteContact()
+                {
+                var Name = document.getElementById("name").value;
+                var table = document.getElementById("myContactsData");
+
+                var rowCount = table.rows.length;
+
+                for(var index=2; index < rowCount; index++)
+                {
+
+                        var rowName = table.rows[index].cells[0].innerHTML;
+                        if(rowName == Name)
+                        {
+                                table.deleteRow(index);
+                        }
+                }
+                }
+        </script>
+</head>
+<body>
+<div id="myForm">
+        <h1>Contact Manager</h1>
+        <form id="contactForm" action="">
+                Name:<br/>
+                <input type="text" id="name" onkeyup="validateName()">
+                <label id="lbl_name" text=""></label>
+                <br/><br/>
+                Phone number:<br/>
+                <input type="text" id="phoneNumber" onkeyup="validatePhone()">
+                <label id="lbl_ph" text=""></label>
+                <br/><br/>
+                <input type="button" value="Submit" onclick="javascript:addContact()">
+                <input type="button" value="Delete" onclick="javascript:deleteContact()">
+                <br /><br />
+        </form>
+</div>
+<div id="myContacts">
+<table id="myContactsData"  style="width:100%" border="1" cellpadding="2">
+    <tr>
+      <th colspan="2"><h3>My Contacts</h3>
+      </th>
+    </tr>
+    <tr>
+        <td><b>Name</b></td>
+        <td><b>Phone Number</b></td>
+    </tr>
+</table>
+</body>
+</html>
